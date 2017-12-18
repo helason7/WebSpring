@@ -29,7 +29,7 @@
               <a class="nav-link" href="${pageContext.request.contextPath}/logout"><i class="fa d-inline fa-lg fa-sign-out"></i> Keluar</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="${pageContext.request.contextPath}/order/show"> <i class="fa d-inline fa-lg fa-shopping-cart"></i> Keranjang:     ${cart.carts.size()}</a>
+            <a class="nav-link" href="${pageContext.request.contextPath}/order/show"> <i class="fa d-inline fa-lg fa-shopping-cart"></i> Keranjang:     ${carts}</a>
           </li>
         </ul>
       </div>

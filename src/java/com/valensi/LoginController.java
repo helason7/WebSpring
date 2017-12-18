@@ -29,7 +29,7 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping(value = "/check")
+    @RequestMapping(value = "/validation")
     public String checkLogin(HttpSession session, @ModelAttribute("loginBean") LoginFormBean loginBean, Model model) {
         Mstcustomer customer = cs.findByUsername(loginBean.getUsername());
         if(customer.getUsername()== null) {
@@ -39,7 +39,7 @@ public class LoginController {
         
         session.setAttribute("user", customer);
         
-        return "tblproduct";
+        return "redirect:/product/all";
     }
     
 }

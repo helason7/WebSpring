@@ -15,9 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LogoutController {
     
     @RequestMapping() 
-    public String logout(HttpSession session, Model model) {
+    public String logout(HttpSession session) {
+//        HttpSession sess = (HttpSession) session.getAttribute("cart");
+//        Cart cart = (Cart) session.getAttribute("cart");
+        session.removeAttribute("cart");
+//        sess.invalidate();
         session.invalidate();
-        return "redirect:login";
+        return "redirect:/login";
     }
     
 }

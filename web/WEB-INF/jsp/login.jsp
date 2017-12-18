@@ -61,7 +61,7 @@
                             <a href="register" class="text-primary">Daftar di sini!</a> 
                             <b>${errMsg}</b>
                         </p>
-                        <form:form action="${pageContext.request.contextPath}/product/all" modelAttribute="loginBean" method="POST">
+                        <form:form action="${pageContext.request.contextPath}/login/validation" modelAttribute="loginBean" method="POST">
                             <div class="form-group"> <label for="InputName">Username</label>
                                 <form:input path="username" type="text" class="form-control" id="InputName" placeholder="Masukan username Anda"/> </div>
                             <div class="form-group"> <label for="InputEmail1">Password</label>

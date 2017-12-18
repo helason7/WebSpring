@@ -26,26 +26,23 @@ public class OrderController {
     @Autowired
     ProductService ps;
 
-    Cart cart = new Cart();
     int no = 1;
 
     @RequestMapping(value = "/add/{productID}")
     public String addCart(@PathVariable Integer productID, Model model, HttpSession session) {
 
-        try {
             Tblproduct prod = ps.findById(productID);
-            if (prod == null) {
-                model.addAttribute("errMsg", "Belom ada barang yg dipilih");
-                return "tblproduct";
+            Cart cart = (Cart) session.getAttribute("cart");
+            if (cart == null) {
+                session.setAttribute("errMsg", "Belom ada barang yg dipilih");
+                cart = new Cart();
+                
             }
             cart.getCarts().put(no++, prod);
             int count = cart.getCarts().size();
-            model.addAttribute("carts", count);
-            session.setAttribute("cart", cart);
+            session.setAttribute("carts", count);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        session.setAttribute("cart", cart);
         return "redirect:/product/all";
     }
     
@@ -54,25 +51,30 @@ public class OrderController {
         return "cartok";
     }
 
-    @RequestMapping(value = "/{productID}/{value}")
-    public String removeCart(@PathVariable Integer productID, Model model, HttpSession session) {
-
-        try {
-            Tblproduct prod = ps.findById(productID);
-            if (prod == null) {
-                model.addAttribute("errMsg", "Belom ada barang yg dipilih");
-                return "tblproduct";
-            }
-            cart.getCarts().remove(no, prod);
-            cart.getCarts().remove(ps);
-            int count = cart.getCarts().size();
-            System.out.println("tot: "+count);
-            model.addAttribute("carts", count);
-            session.setAttribute("cartsess", cart);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "cartok";
+//    @RequestMapping(value = "/{productID}/{value}")
+//    public String removeCart(@PathVariable Integer productID, Model model, HttpSession session) {
+//
+//        try {
+//            Tblproduct prod = ps.findById(productID);
+//            if (prod == null) {
+//                model.addAttribute("errMsg", "Belom ada barang yg dipilih");
+//                return "tblproduct";
+//            }
+//            cart.getCarts().remove(no, prod);
+//            cart.getCarts().remove(ps);
+//            int count = cart.getCarts().size();
+//            System.out.println("tot: "+count);
+//            model.addAttribute("carts", count);
+//            session.setAttribute("cartsess", cart);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return "cartok";
+//    }
+    @RequestMapping(value="/checkout")
+    public String checkOut(HttpSession session){
+        session.setAttribute("carts", 0);
+        session.removeAttribute("cart");
+        return "redirect:/logout";
     }
 }
