@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -34,17 +35,19 @@
                                 </tr>
                             </thead>
                             <tbody> 
-                                <c:forEach var="c" items="${cart.carts.values()}">
+                                <c:forEach var="c" items="${cart.carts}">
                                 <tr>
-                                    <td class="px-5">${c.id}</td>
-                                    <td class="px-5">${c.productNama}</td>
-                                    <td class="text-right px-5">${c.harga}</td>
+                                    <td class="px-5">${c.key}</td>
+                                    <td class="px-5">${c.value.productNama}</td>
+                                    <td class="text-right px-5">${c.value.harga}</td>
                                     <td>
                                             <input class="col-sm form-control form-control-sm text-right" placeholder="0" min="0" type="number">
                                     </td>
                                     <td class="text-muted px-5">
-                                        <button class="btn btn-primary btn-sm"> <i class="fa d-inline fa-2x fa-level-up"></i><b class="">  Ubah Pesanan</b> </button>
-                                        <button class="btn btn-danger btn-sm"> <i class="fa d-inline fa-2x fa-frown-o"></i><b class="">  Hapus Pesanan</b> </button>
+                                        <button class="btn btn-primary btn-sm"> <i class="fa d-inline fa-2x fa-level-up"></i><b>  Ubah Pesanan</b> </button>
+                                        <a href="${pageContext.request.contextPath}/order/${c.value.id}/${c.key}">
+                                            <button class="btn btn-danger btn-sm"> <i class="fa d-inline fa-2x fa-frown-o"></i><b>  Hapus Pesanan</b> </button>
+                                        </a>         
                                     </td>
                                 </tr>
                                 </c:forEach>
@@ -52,7 +55,7 @@
                         </table>
                     </div>
                 </div>
-                <h1 class="text-muted">Total Pembayaran : </h1>
+                        <h1 class="text-muted">Total : <sup>Rp</sup>${total}</h1>
             </div>
         </div>
         <div class="py-5">
@@ -67,7 +70,7 @@
                         <div class="card">
                             <div class="card-body p-5">
                                 <h3 class="pb-3">Reservasi</h3>
-                                <form action="https://formspree.io/YOUREMAILHERE">
+                                <form:form action="${pageContext.request.contextPath}/logout" method="post">
                                     <div class="form-group"> <label>Nama</label>
                                         <input class="form-control" placeholder="Untuk reservasi tempat"> </div>
                                     <div class="form-group"> <label>Jam</label>
@@ -75,7 +78,7 @@
                                     <div class="form-group"> <label>Jumlah Orang</label>
                                         <input type="number" class="form-control" placeholder="0" min="0"> </div>
                                     <button type="submit" class="btn mt-2 btn-outline-dark">Selesai</button>
-                                </form>
+                                </form:form>
                             </div>
                         </div>
                     </div>

@@ -22,23 +22,6 @@
         </style>
     </head>
     <body>
-        <!--div class="container" style="padding: 50px;">
-        <div class="card" style="width: 20rem;">
-            <div class="card-body">
-                <h2 class="card-title">Please login!</h2>
-                <p class="card-text">
-                 <b>${errMsg}</b>
-                 <form:form action="${pageContext.request.contextPath}/login/check" modelAttribute="loginBean" method="POST" >
-                     <form:label path="username">Username</form:label>
-                     <form:input path="username" cssClass="form-control"/> <br/>
-                     <form:label path="password">Password</form:label>
-                     <form:password path="password" cssClass="form-control"/><br/>
-                <form:button name="submitButton" value="Submit" class="btn btn-primary" cssClass="form-control">Submit</form:button>           
-                 </form:form>
-                </p>
-            </div>
-        </div>
-        </div-->
         <div class="background">
             <div class="py-5 text-center opaque-overlay">
                 <div class="container py-5">

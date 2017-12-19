@@ -7,6 +7,7 @@ package com.valensi;
 
 import com.valensi.dao.ProductService;
 import com.valensi.entity.Tblproduct;
+import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,7 @@ public class OrderController {
     ProductService ps;
 
     int no = 1;
+    double totalHarga;
 
     @RequestMapping(value = "/add/{productID}")
     public String addCart(@PathVariable Integer productID, Model model, HttpSession session) {
@@ -48,29 +50,39 @@ public class OrderController {
     
     @RequestMapping(value = "/show")
     public String showCart(Model model, HttpSession session) {
+        Cart cart = (Cart) session.getAttribute("cart");
+        Map<Integer, Tblproduct> carts = cart.getCarts();
+        Double total = 0.0;
+        for (Map.Entry<Integer, Tblproduct> entry : carts.entrySet()) {
+            Tblproduct value = entry.getValue();
+            total = total + value.getHarga();
+        }
+        totalHarga = total;
+        model.addAttribute("total", total);
         return "cartok";
     }
 
-//    @RequestMapping(value = "/{productID}/{value}")
-//    public String removeCart(@PathVariable Integer productID, Model model, HttpSession session) {
-//
-//        try {
-//            Tblproduct prod = ps.findById(productID);
-//            if (prod == null) {
+    @RequestMapping(value = "/{productID}/{value}")
+    public String removeCart(@PathVariable Integer productID, @PathVariable Integer value, Model model, HttpSession session) {
+
+        try {
+            Tblproduct prod = ps.findById(productID);
+            if (prod == null) {
 //                model.addAttribute("errMsg", "Belom ada barang yg dipilih");
-//                return "tblproduct";
-//            }
-//            cart.getCarts().remove(no, prod);
-//            cart.getCarts().remove(ps);
-//            int count = cart.getCarts().size();
-//            System.out.println("tot: "+count);
-//            model.addAttribute("carts", count);
-//            session.setAttribute("cartsess", cart);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return "cartok";
-//    }
+                return "tblproduct";
+            }
+            Double total;
+            totalHarga = totalHarga - prod.getHarga();
+            Cart cart = (Cart) session.getAttribute("cart");
+            cart.getCarts().remove(value, prod);
+            int count = cart.getCarts().size();
+            model.addAttribute("total", totalHarga);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "cartok";
+    }
+    
     @RequestMapping(value="/checkout")
     public String checkOut(HttpSession session){
         session.setAttribute("carts", 0);

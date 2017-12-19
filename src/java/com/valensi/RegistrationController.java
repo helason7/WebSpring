@@ -45,7 +45,7 @@ public class RegistrationController {
         customer.setPassword(registerBean.getPassword());
         cs.addCustomer(customer);
         model.addAttribute("data", registerBean);
-        return "successregistration";
+        return "redirect:/login";
     }
     
 }
